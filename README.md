@@ -8,7 +8,7 @@ Node.js 22.12 以上が必要。
 
 ```sh
 npm install
-npm run dev      # http://localhost:4321/website/ で確認
+npm run dev      # http://localhost:4321/ で確認
 npm run build    # dist/ に書き出し
 ```
 
@@ -23,20 +23,13 @@ npm run build    # dist/ に書き出し
 
 見た目は `src/pages/index.astro`（各セクション）と `src/layouts/Base.astro`（色・フォント）。
 
-## 公開
+## 公開（Cloudflare Pages）
 
-### Cloudflare Pages（akm19gu.pages.dev）
+https://akm19gu.pages.dev/
 
-Cloudflare Pages にこのリポジトリをつないで、`main` への push ごとにビルドする。
+Cloudflare Pages にこのリポジトリをつないであり、`main` への push ごとにビルドして公開する。
 
 - Framework preset：Astro
 - Build command：`npm run build`
 - Build output directory：`dist`
 - Node.js のバージョンは `.node-version` で指定している
-
-Cloudflare のビルドでは `CF_PAGES=1` が入るので、`astro.config.mjs` がルート直下（`base` なし）向けに切り替わる。
-
-### GitHub Pages（akm19gu.github.io/website）
-
-`main` に push すると `.github/workflows/deploy.yml` がビルドして公開する。
-Cloudflare Pages に移りきったら、このワークフローは消してよい。
