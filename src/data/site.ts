@@ -39,16 +39,28 @@ export const spotifyAlbums = [
   { id: '3JY5pafQJZpOFDHgWQJMHB', title: 'Post251' },
 ];
 
-export type Release = { title: string; kind: string; year: number; with?: string; url?: string };
+// 2026年10月時点で Spotify・YouTube・hearnow から確認できたリリース（新しい順）。
+// date は分かる範囲で 'YYYY-MM-DD'、年しか分からないものは 'YYYY'。
+export type Release = {
+  title: string;
+  kind: 'Album' | 'EP' | 'Single' | 'YouTube';
+  date: string;
+  artist?: string;
+  with?: string;
+  url?: string;
+};
 
 export const discography: Release[] = [
-  { title: 'Reborn（リボーン）', kind: 'EP', year: 2025, url: 'https://open.spotify.com/album/27L4KpIXDBxGhRYx04dFwY' },
-  { title: 'Post251', kind: 'EP', year: 2025, with: 'ぱみ (@pamiyummy)', url: 'https://open.spotify.com/album/3JY5pafQJZpOFDHgWQJMHB' },
-  { title: 'The Boundary Wavers', kind: 'Album', year: 2024 },
-  { title: 'Broom（エニシダ）', kind: 'Single', year: 2024, url: 'https://youtu.be/YlE6fyLyZ1g' },
-  { title: 'Tunnel Lamps', kind: 'Single', year: 2024 },
-  { title: 'When it rains in April', kind: 'Single', year: 2024 },
-  { title: "Autumn Leaves but it's 'fast five'", kind: 'Single', year: 2024 },
+  { title: '貝塚行に乗っちゃった (feat. 重音テト)', kind: 'Single', date: '2026-03-27', url: 'https://open.spotify.com/album/3l7oOFUomSVkehMK1dcUwx' },
+  { title: '帰っちゃおうかな', kind: 'YouTube', date: '2026-02-19', url: 'https://www.youtube.com/watch?v=oC_r0DZLHdA' },
+  { title: 'リボーン (Reborn)', kind: 'EP', date: '2025-11-04', url: 'https://open.spotify.com/album/27L4KpIXDBxGhRYx04dFwY' },
+  { title: 'Post251', kind: 'EP', date: '2025-10-26', with: 'ぱみ', url: 'https://open.spotify.com/album/3JY5pafQJZpOFDHgWQJMHB' },
+  { title: '地獄の沙汰もガチ金次第', kind: 'YouTube', date: '2025-08-25', url: 'https://www.youtube.com/watch?v=p8jzZRMyxzw' },
+  { title: 'One minute before', kind: 'YouTube', date: '2025-03-27', url: 'https://www.youtube.com/watch?v=EecEE-qlePo' },
+  { title: 'エニシダ (Broom)', kind: 'Single', date: '2024-12-29', url: 'https://open.spotify.com/album/51eNrpxEloNdviplFi5azM' },
+  { title: "Autumn Leaves in 'fast five'", kind: 'YouTube', date: '2024-10-10', url: 'https://www.youtube.com/watch?v=4Hg9ceCR3C0' },
+  { title: 'When It Rains in April', kind: 'YouTube', date: '2024-09-25', url: 'https://www.youtube.com/watch?v=2cs_fqDl6P8' },
+  { title: 'The Boundary Wavers', kind: 'Album', date: '2024', artist: 'Dawn Brigade Orchestral Project', url: 'https://dawnbrigadeorchestralproject.hearnow.com/' },
 ];
 
 export type Work = { title: string; description: string; url: string; image: ImageMetadata; tag: string };
