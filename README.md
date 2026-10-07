@@ -23,9 +23,20 @@ npm run build    # dist/ に書き出し
 
 見た目は `src/pages/index.astro`（各セクション）と `src/layouts/Base.astro`（色・フォント）。
 
-## 公開（GitHub Pages）
+## 公開
 
-`main` ブランチに push すると `.github/workflows/deploy.yml` がビルドして公開する。
-初回だけ、リポジトリの Settings → Pages → Build and deployment の Source を「GitHub Actions」にしておく。
+### Cloudflare Pages（○○.pages.dev）
 
-公開先は `https://akm19gu.github.io/website/`。独自ドメインに移すときは `astro.config.mjs` の `site` を書き換え、`base` を消す。
+Cloudflare Pages にこのリポジトリをつないで、`main` への push ごとにビルドする。
+
+- Framework preset：Astro
+- Build command：`npm run build`
+- Build output directory：`dist`
+- Node.js のバージョンは `.node-version` で指定している
+
+Cloudflare のビルドでは `CF_PAGES=1` が入るので、`astro.config.mjs` がルート直下（`base` なし）向けに切り替わる。
+
+### GitHub Pages（akm19gu.github.io/website）
+
+`main` に push すると `.github/workflows/deploy.yml` がビルドして公開する。
+Cloudflare Pages に移りきったら、このワークフローは消してよい。
