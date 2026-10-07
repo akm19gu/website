@@ -25,7 +25,7 @@ npm run build    # dist/ に書き出し
 
 ## 公開
 
-### Cloudflare Pages（○○.pages.dev）
+### Cloudflare Pages（akm19gu.pages.dev）
 
 Cloudflare Pages にこのリポジトリをつないで、`main` への push ごとにビルドする。
 
