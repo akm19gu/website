@@ -1,6 +1,7 @@
 // サイトに載せる内容はすべてここにまとめてある。
 // 作品やリンクを足すときは、このファイルの配列に一件追加するだけでよい。
 import type { ImageMetadata } from 'astro';
+import hibizegengaku from '../assets/hibizegengaku.png';
 import mikayaHab from '../assets/mikaya-hab.png';
 import post251 from '../assets/post251.png';
 import dawn from '../assets/dawn.png';
@@ -53,6 +54,13 @@ export const discography: Release[] = [
 export type Work = { title: string; description: string; url: string; image: ImageMetadata; tag: string };
 
 export const works: Work[] = [
+  {
+    title: '日々是衒学',
+    description: '毎日ひとつ、知ると世界の見え方が少し変わる言葉を届ける Web アプリ。ホーム画面に追加して使える。',
+    url: 'https://hibizegengaku.akm7339gil.workers.dev/#today',
+    image: hibizegengaku,
+    tag: 'Web App',
+  },
   {
     title: 'ミカヤとヒットアンドブロー',
     description: '対戦型ヒットアンドブロー！ Windows 対応。',
