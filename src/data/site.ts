@@ -3,7 +3,7 @@
 // 言語で変わる文は { ja, en } の形で両方書く。
 import type { ImageMetadata } from 'astro';
 import hibizegengaku from '../assets/hibizegengaku.png';
-import mikayaHab from '../assets/mikaya-hab.png';
+import micaiahHab from '../assets/micaiah-hab.png';
 import post251 from '../assets/post251.png';
 import dawn from '../assets/dawn.png';
 import originals from '../assets/originals.jpg';
@@ -108,13 +108,13 @@ export const works: Work[] = [
     tag: 'Web App',
   },
   {
-    title: { ja: 'ミカヤとヒットアンドブロー', en: 'Mikaya and Hit & Blow' },
+    title: { ja: 'ミカヤとヒットアンドブロー', en: 'Micaiah and Hit & Blow' },
     description: {
       ja: '対戦型ヒットアンドブロー！ Windows 対応。',
       en: 'A head-to-head Hit & Blow game! For Windows.',
     },
     url: 'https://akm19gu.booth.pm/items/7803251',
-    image: mikayaHab,
+    image: micaiahHab,
     tag: 'Game',
   },
   {
@@ -203,7 +203,7 @@ export const timeline: { year: string; text: Text }[] = [
     year: '2025',
     text: {
       ja: 'EP「リボーン」をリリース。ゲーム「ミカヤとヒットアンドブロー」をリリース。',
-      en: 'Released the EP “Reborn” and the game “Mikaya and Hit & Blow”.',
+      en: 'Released the EP “Reborn” and the game “Micaiah and Hit & Blow”.',
     },
   },
 ];
