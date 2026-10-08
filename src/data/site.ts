@@ -98,12 +98,12 @@ export type Work = { title: Text; description: Text; url: string; image: ImageMe
 
 export const works: Work[] = [
   {
-    title: { ja: '日々是衒学', en: 'Hibi Kore Gengaku (日々是衒学)' },
+    title: { ja: '日々是衒学', en: 'Nichinichi Kore Gengaku (日々是衒学)' },
     description: {
       ja: '毎日ひとつ、知ると世界の見え方が少し変わる言葉を届ける Web アプリ。ホーム画面に追加して使える。',
       en: 'A web app that serves one word a day — the kind that changes how you see the world a little. Can be added to your home screen. (Japanese)',
     },
-    url: 'https://hibizegengaku.akm7339gil.workers.dev/#today',
+    url: 'https://nichinichikoregengaku.akm7339gil.workers.dev/#today',
     image: hibizegengaku,
     tag: 'Web App',
   },
