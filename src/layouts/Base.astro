@@ -1,20 +1,23 @@
 ---
-import { profile } from '../data/site';
+import { profile, langs, langPath, type Lang } from '../data/site';
 
 interface Props {
+  lang: Lang;
   title?: string;
   description?: string;
 }
 
+const { lang } = Astro.props;
 const {
-  title = `${profile.name} (${profile.nameEn})`,
-  description = `${profile.catchphrase} — ${profile.lead}`,
+  title = `${profile.name[lang]} (${profile.subName[lang]})`,
+  description = `${profile.catchphrase} — ${profile.lead[lang]}`,
 } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const pageUrl = (l: Lang) => new URL(`${base}/${langPath[l]}`, Astro.site);
 ---
 
 <!doctype html>
-<html lang="ja">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -23,7 +26,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:url" content={pageUrl(lang)} />
+    <meta property="og:locale" content={lang === 'ja' ? 'ja_JP' : 'en_US'} />
+    <link rel="canonical" href={pageUrl(lang)} />
+    {langs.map((l) => <link rel="alternate" hreflang={l} href={pageUrl(l)} />)}
+    <link rel="alternate" hreflang="x-default" href={pageUrl('ja')} />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content={`@${profile.handle}`} />
     <meta name="theme-color" content="#16131a" />
