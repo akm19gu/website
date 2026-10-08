@@ -1,0 +1,634 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import avatar from '../assets/avatar.jpg';
+import bg from '../assets/bg.jpg';
+import {
+  ui,
+  langs,
+  langPath,
+  profile,
+  videos,
+  spotifyAlbums,
+  discography,
+  works,
+  essays,
+  timeline,
+  links,
+  type Lang,
+} from '../data/site';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+const nav = [
+  { href: '#music', label: 'Music' },
+  { href: '#works', label: 'Works' },
+  { href: '#essays', label: 'Essays' },
+  { href: '#about', label: 'About' },
+  { href: '#links', label: 'Links' },
+];
+const year = new Date().getFullYear();
+---
+
+<Base lang={lang}>
+  <nav class="lang-switch" aria-label={ui.langNav[lang]}>
+    {
+      langs.map((l) =>
+        l === lang ? (
+          <span aria-current="page">{l.toUpperCase()}</span>
+        ) : (
+          <a href={`${base}${langPath[l]}`} hreflang={l} lang={l}>
+            {l.toUpperCase()}
+          </a>
+        ),
+      )
+    }
+  </nav>
+
+  <header class="hero">
+    <Image src={bg} alt="" class="hero-bg" widths={[960, 1920]} sizes="100vw" loading="eager" />
+    <div class="hero-inner">
+      <Image src={avatar} alt={ui.avatarAlt[lang]} class="avatar" width={160} height={160} loading="eager" />
+      <p class="catch">{profile.catchphrase}</p>
+      <h1>
+        {profile.name[lang]}<span class="en">{profile.subName[lang]}</span>
+      </h1>
+      <p class="roles">{profile.roles[lang]}</p>
+      <p class="lead">{profile.lead[lang]}</p>
+      <nav aria-label={ui.pageNav[lang]}>
+        <ul>
+          {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="music">
+      <div class="head">
+        <h2>Music</h2>
+        <p>{ui.music[lang]}</p>
+      </div>
+
+      <ul class="videos">
+        {
+          videos.map((v) => (
+            <li>
+              <a href={`https://www.youtube.com/watch?v=${v.id}`} target="_blank" rel="noopener">
+                <div class="thumb">
+                  <img
+                    src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`}
+                    alt=""
+                    width="480"
+                    height="360"
+                    loading="lazy"
+                  />
+                  <span class="play" aria-hidden="true" />
+                </div>
+                <h3>{v.title}</h3>
+                <p>{v.note[lang]}</p>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="spotify">
+        {
+          spotifyAlbums.map((a) => (
+            <iframe
+              title={`Spotify: ${a.title}`}
+              src={`https://open.spotify.com/embed/album/${a.id}?theme=0`}
+              height="152"
+              loading="lazy"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            />
+          ))
+        }
+      </div>
+
+      <h3 class="sub">Discography</h3>
+      <ul class="disco">
+        {
+          discography.map((r) => (
+            <li>
+              <time class="year" datetime={r.date}>
+                {r.date.slice(0, 7).replace('-', '.')}
+              </time>
+              <span class="kind">{r.kind}</span>
+              <span class="title">
+                {r.url ? (
+                  <a href={r.url} target="_blank" rel="noopener">
+                    {r.title}
+                  </a>
+                ) : (
+                  r.title
+                )}
+                {r.artist && <small> / {r.artist}</small>}
+                {r.with && <small> with {r.with[lang]}</small>}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section id="works">
+      <div class="head">
+        <h2>Works</h2>
+        <p>{ui.works[lang]}</p>
+      </div>
+      <ul class="cards">
+        {
+          works.map((w) => (
+            <li>
+              <a href={w.url} target="_blank" rel="noopener">
+                <div class="card-img">
+                  <Image src={w.image} alt="" width={640} />
+                </div>
+                <div class="card-body">
+                  <span class="tag">{w.tag}</span>
+                  <h3>{w.title[lang]}</h3>
+                  <p>{w.description[lang]}</p>
+                </div>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section id="essays">
+      <div class="head">
+        <h2>Essays</h2>
+        <p>{ui.essays[lang]}</p>
+      </div>
+      <ul class="essays">
+        {
+          essays.map((e) => (
+            <li>
+              <a href={e.url} target="_blank" rel="noopener">
+                <h3>{e.title[lang]}</h3>
+                <p>{e.note[lang]}</p>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section id="about">
+      <div class="head">
+        <h2>About</h2>
+        <p>{ui.about[lang]}</p>
+      </div>
+      <div class="about">
+        <div class="bio">
+          {profile.about[lang].map((p) => <p>{p}</p>)}
+        </div>
+        <ol class="timeline">
+          {
+            timeline.map((t) => (
+              <li>
+                <span class="year">{t.year}</span>
+                <p>{t.text[lang]}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+
+    <section id="links">
+      <div class="head">
+        <h2>Links</h2>
+        <p>{ui.links[lang]}</p>
+      </div>
+      <ul class="links">
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.url} target="_blank" rel="noopener">
+                <span class="label">{l.label}</span>
+                <span class="note">{l.note[lang]}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>© {year} {profile.name[lang]} ({profile.subName[lang]})</p>
+  </footer>
+</Base>
+
+<style>
+  /* ---------- Language switch ---------- */
+  .lang-switch {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    z-index: 10;
+    display: flex;
+    border: 1px solid rgba(236, 230, 238, 0.3);
+    border-radius: 999px;
+    overflow: hidden;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    background: rgba(22, 19, 26, 0.55);
+  }
+  .lang-switch a,
+  .lang-switch span {
+    padding: 4px 12px;
+    text-decoration: none;
+  }
+  .lang-switch span {
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 700;
+  }
+  .lang-switch a:hover {
+    background: var(--accent-soft);
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    min-height: 92vh;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    padding: 64px 16px;
+    text-align: center;
+  }
+  .hero :global(.hero-bg) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.85);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(22, 19, 26, 0.55) 0%, rgba(22, 19, 26, 0.7) 60%, var(--bg) 100%);
+  }
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+  }
+  .hero :global(.avatar) {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 24px;
+    border: 2px solid rgba(236, 230, 238, 0.25);
+  }
+  .catch {
+    margin: 0;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.6rem, 8vw, 4rem);
+    line-height: 1.2;
+    margin: 8px 0 4px;
+  }
+  h1 .en {
+    display: block;
+    font-size: 0.35em;
+    letter-spacing: 0.3em;
+    color: var(--muted);
+    font-family: var(--sans);
+    margin-top: 8px;
+  }
+  .roles {
+    margin: 16px 0 0;
+    font-weight: 500;
+  }
+  .lead {
+    color: var(--muted);
+    margin: 8px 0 0;
+  }
+  .hero nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 32px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+  .hero nav a {
+    display: inline-block;
+    padding: 6px 16px;
+    border: 1px solid rgba(236, 230, 238, 0.3);
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .hero nav a:hover {
+    background: var(--accent-soft);
+    border-color: var(--accent);
+  }
+
+  /* ---------- Sections ---------- */
+  main {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+  section {
+    padding: 72px 0;
+    border-top: 1px solid var(--line);
+  }
+  section:first-child {
+    border-top: none;
+  }
+  .head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .head h2 {
+    font-family: var(--serif);
+    font-size: 2rem;
+    margin: 0;
+  }
+  .head p {
+    margin: 0;
+    color: var(--muted);
+  }
+  ul,
+  ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  h3 {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .sub {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    margin: 48px 0 16px;
+  }
+
+  /* ---------- Music ---------- */
+  .videos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 24px;
+  }
+  .videos a {
+    text-decoration: none;
+    display: block;
+  }
+  .thumb {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--bg-raised);
+    margin-bottom: 12px;
+  }
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+  }
+  .videos a:hover .thumb img {
+    transform: scale(1.04);
+  }
+  .play {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(22, 19, 26, 0.7);
+  }
+  .play::after {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 15px;
+    border-style: solid;
+    border-width: 9px 0 9px 14px;
+    border-color: transparent transparent transparent var(--text);
+  }
+  .videos p {
+    margin: 2px 0 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .spotify {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .spotify iframe {
+    width: 100%;
+    border: 0;
+    border-radius: 12px;
+  }
+  .disco li {
+    display: grid;
+    grid-template-columns: 4.5em 4.5em 1fr;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .disco .year {
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+  .disco .kind {
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+  .disco small {
+    color: var(--muted);
+  }
+  .disco a {
+    text-decoration-color: var(--accent);
+    text-underline-offset: 4px;
+  }
+
+  /* ---------- Works ---------- */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+  }
+  .cards a {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    text-decoration: none;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .cards a:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .card-img {
+    aspect-ratio: 16 / 10;
+    background: #fff;
+    overflow: hidden;
+  }
+  .card-img :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .card-body {
+    padding: 16px 20px 20px;
+  }
+  .tag {
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+  .card-body p {
+    margin: 8px 0 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  /* ---------- Essays ---------- */
+  .essays {
+    display: grid;
+    gap: 12px;
+  }
+  .essays a {
+    display: block;
+    padding: 20px 24px;
+    border-left: 3px solid var(--accent);
+    background: var(--bg-raised);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .essays a:hover {
+    background: var(--accent-soft);
+  }
+  .essays h3 {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+  }
+  .essays p {
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  /* ---------- About ---------- */
+  .about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+  .bio p {
+    margin: 0 0 1em;
+  }
+  .timeline li {
+    display: grid;
+    grid-template-columns: 3.5em 1fr;
+    gap: 12px;
+    padding-bottom: 16px;
+  }
+  .timeline .year {
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+  }
+  .timeline p {
+    margin: 0;
+  }
+
+  /* ---------- Links ---------- */
+  .links {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .links a {
+    display: flex;
+    flex-direction: column;
+    padding: 16px 20px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .links a:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .links .label {
+    font-weight: 700;
+  }
+  .links .note {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+
+  footer {
+    text-align: center;
+    padding: 48px 16px;
+    color: var(--muted);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--line);
+  }
+  footer p {
+    margin: 0;
+  }
+
+  @media (max-width: 720px) {
+    section {
+      padding: 56px 0;
+    }
+    .about {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .disco li {
+      grid-template-columns: 4.5em 1fr;
+    }
+    .disco .kind {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    .disco .title {
+      grid-column: 2;
+    }
+  }
+</style>
