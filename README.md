@@ -22,7 +22,10 @@ npm run build    # dist/ に書き出し
 - リリースを足す → `discography` に追加
 - リンクを足す → `links` に追加
 
-ページは日本語が `/`、英語が `/en/`。中身はどちらも `src/components/Home.astro`（各セクション）で、見た目もそこと `src/layouts/Base.astro`（色・フォント）。
+ページは日本語が `/`、英語が `/en/`。どちらも中身は `src/components/Home.astro` で、言語だけを切り替えている。
+
+- 各セクションの並びと見た目 → `src/components/Home.astro`
+- 色・フォント・`<head>` のタグ → `src/layouts/Base.astro`
 
 ## 公開（Cloudflare Pages）
 
