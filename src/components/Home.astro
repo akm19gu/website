@@ -9,6 +9,7 @@ import {
   langPath,
   profile,
   videos,
+  bandcampAlbums,
   spotifyAlbums,
   discography,
   works,
@@ -73,6 +74,23 @@ const year = new Date().getFullYear();
       <div class="head">
         <h2>Music</h2>
         <p>{ui.music[lang]}</p>
+      </div>
+
+      <div class="bandcamp">
+        <p class="label">{ui.newRelease[lang]}</p>
+        {
+          bandcampAlbums.map((a) => (
+            <iframe
+              title={`Bandcamp: ${a.title}`}
+              src={`https://bandcamp.com/EmbeddedPlayer/album=${a.id}/size=large/bgcol=333333/linkcol=e8a95e/tracklist=false/artwork=small/transparent=true/`}
+              height="120"
+              loading="lazy"
+              seamless
+            >
+              <a href={a.url}>{a.title}</a>
+            </iframe>
+          ))
+        }
       </div>
 
       <ul class="videos">
@@ -149,7 +167,7 @@ const year = new Date().getFullYear();
             <li>
               <a href={w.url} target="_blank" rel="noopener">
                 <div class="card-img">
-                  <Image src={w.image} alt="" width={640} style={w.imagePosition && `object-position: ${w.imagePosition}`} />
+                  <Image src={w.image} alt="" width={640} />
                 </div>
                 <div class="card-body">
                   <span class="tag">{w.tag}</span>
@@ -441,6 +459,25 @@ const year = new Date().getFullYear();
     margin: 2px 0 0;
     color: var(--muted);
     font-size: 0.85rem;
+  }
+  .bandcamp {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .bandcamp .label {
+    margin: 0;
+    font-size: 0.75rem;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+  }
+  /* Bandcamp のプレイヤーは 700px より広がらないので、枠もそこで止める */
+  .bandcamp iframe {
+    width: 100%;
+    max-width: 700px;
+    border: 0;
+    border-radius: 12px;
+    background: #333333;
   }
   .spotify {
     display: grid;

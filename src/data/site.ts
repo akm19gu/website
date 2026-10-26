@@ -7,7 +7,6 @@ import micaiahHab from '../assets/micaiah-hab.png';
 import post251 from '../assets/post251.png';
 import dawn from '../assets/dawn.png';
 import originals from '../assets/originals.jpg';
-import grooves from '../assets/grooves.jpg';
 
 export type Lang = 'ja' | 'en';
 export type Text = Record<Lang, string>;
@@ -24,6 +23,7 @@ export const ui = {
   essays: { ja: 'かいた', en: 'Things I wrote' },
   about: { ja: 'わたしについて', en: 'About me' },
   links: { ja: 'あちこちにいる', en: 'Find me around' },
+  newRelease: { ja: '新譜', en: 'New release' },
   pageNav: { ja: 'ページ内リンク', en: 'Sections' },
   langNav: { ja: '言語', en: 'Language' },
   avatarAlt: { ja: 'なかむのアイコン', en: 'Nakam’s avatar' },
@@ -64,6 +64,12 @@ export const videos: Video[] = [
   { id: 'HqFP4MWw17s', title: 'Dawn Brigade Orchestral Project', note: { ja: 'Anime & Game Jazz Cover Music', en: 'Anime & Game Jazz Cover Music' } },
 ];
 
+// Music のいちばん上に、Bandcamp の埋め込みプレイヤーとして出すアルバム。
+// id は Bandcamp のアルバムページの og:video にある album=… の数字。
+export const bandcampAlbums = [
+  { id: '1191509877', title: 'Grooves', url: 'https://akm19gu.bandcamp.com/album/grooves' },
+];
+
 // Spotify に埋め込みプレイヤーとして出すアルバム
 export const spotifyAlbums = [
   { id: '27L4KpIXDBxGhRYx04dFwY', title: 'リボーン' },
@@ -95,28 +101,9 @@ export const discography: Release[] = [
   { title: 'The Boundary Wavers', kind: 'Album', date: '2024', artist: 'Dawn Brigade Orchestral Project', url: 'https://dawnbrigadeorchestralproject.hearnow.com/' },
 ];
 
-// imagePosition はカードで画像を切り取る位置（CSS の object-position）。省略すると中央。
-export type Work = {
-  title: Text;
-  description: Text;
-  url: string;
-  image: ImageMetadata;
-  imagePosition?: string;
-  tag: string;
-};
+export type Work = { title: Text; description: Text; url: string; image: ImageMetadata; tag: string };
 
 export const works: Work[] = [
-  {
-    title: { ja: 'Grooves', en: 'Grooves' },
-    description: {
-      ja: 'Post251 の1stアルバム。微分音やディラ・ビートを通して「揺らぎ」を探る全10曲。Bandcamp で配信中。',
-      en: 'Post251’s first album — ten tracks exploring “wobble” through microtones and Dilla beats. Out now on Bandcamp.',
-    },
-    url: 'https://akm19gu.bandcamp.com/album/grooves',
-    image: grooves,
-    imagePosition: 'center bottom',
-    tag: 'Album',
-  },
   {
     title: { ja: '日々是衒学', en: 'Nichinichi Kore Gengaku (日々是衒学)' },
     description: {
