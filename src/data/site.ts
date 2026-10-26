@@ -99,6 +99,7 @@ export type Release = {
 };
 
 export const discography: Release[] = [
+  { title: 'Grooves', kind: 'Album', date: '2026-10-25', with: { ja: 'ぱみ', en: 'Pami' }, url: 'https://akm19gu.bandcamp.com/album/grooves' },
   { title: '貝塚行に乗っちゃった (feat. 重音テト)', kind: 'Single', date: '2026-03-27', url: 'https://open.spotify.com/album/3l7oOFUomSVkehMK1dcUwx' },
   { title: '帰っちゃおうかな', kind: 'YouTube', date: '2026-02-19', url: 'https://www.youtube.com/watch?v=oC_r0DZLHdA' },
   { title: 'リボーン (Reborn)', kind: 'EP', date: '2025-11-04', url: 'https://open.spotify.com/album/27L4KpIXDBxGhRYx04dFwY' },
