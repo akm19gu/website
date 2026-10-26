@@ -7,6 +7,7 @@ import micaiahHab from '../assets/micaiah-hab.png';
 import post251 from '../assets/post251.png';
 import dawn from '../assets/dawn.png';
 import originals from '../assets/originals.jpg';
+import grooves from '../assets/grooves.jpg';
 
 export type Lang = 'ja' | 'en';
 export type Text = Record<Lang, string>;
@@ -23,6 +24,7 @@ export const ui = {
   essays: { ja: 'かいた', en: 'Things I wrote' },
   about: { ja: 'わたしについて', en: 'About me' },
   links: { ja: 'あちこちにいる', en: 'Find me around' },
+  latestRelease: { ja: 'Latest Release', en: 'Latest Release' },
   pageNav: { ja: 'ページ内リンク', en: 'Sections' },
   langNav: { ja: '言語', en: 'Language' },
   avatarAlt: { ja: 'なかむのアイコン', en: 'Nakam’s avatar' },
@@ -62,6 +64,21 @@ export const videos: Video[] = [
   { id: 'G5aBacp9J0s', title: 'Giant Steps in 13 and 5', note: { ja: 'Giant Steps、クソ変拍子にしてみた', en: 'Giant Steps in ridiculous odd meters' } },
   { id: 'HqFP4MWw17s', title: 'Dawn Brigade Orchestral Project', note: { ja: 'Anime & Game Jazz Cover Music', en: 'Anime & Game Jazz Cover Music' } },
 ];
+
+// Music のいちばん上に大きく出す最新リリース。
+// bandcampId は Bandcamp のアルバムページの og:video にある album=… の数字。
+export const featuredRelease = {
+  title: 'Grooves',
+  meta: 'Post251 · 1st Album · 2026.10.25',
+  date: '2026-10-25',
+  description: {
+    ja: '微分音やディラ・ビートを通して「揺らぎ」を探る全10曲。',
+    en: 'Ten tracks exploring “wobble” through microtones and Dilla beats.',
+  } satisfies Text,
+  url: 'https://akm19gu.bandcamp.com/album/grooves',
+  bandcampId: '1191509877',
+  image: grooves,
+};
 
 // Spotify に埋め込みプレイヤーとして出すアルバム
 export const spotifyAlbums = [
