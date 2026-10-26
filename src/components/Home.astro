@@ -9,7 +9,7 @@ import {
   langPath,
   profile,
   videos,
-  bandcampAlbums,
+  featuredRelease,
   spotifyAlbums,
   discography,
   works,
@@ -76,21 +76,27 @@ const year = new Date().getFullYear();
         <p>{ui.music[lang]}</p>
       </div>
 
-      <div class="bandcamp">
-        <p class="label">{ui.newRelease[lang]}</p>
-        {
-          bandcampAlbums.map((a) => (
-            <iframe
-              title={`Bandcamp: ${a.title}`}
-              src={`https://bandcamp.com/EmbeddedPlayer/album=${a.id}/size=large/bgcol=333333/linkcol=e8a95e/tracklist=false/artwork=small/transparent=true/`}
-              height="120"
-              loading="lazy"
-              seamless
-            >
-              <a href={a.url}>{a.title}</a>
-            </iframe>
-          ))
-        }
+      <div class="featured">
+        <a class="cover" href={featuredRelease.url} target="_blank" rel="noopener">
+          <Image src={featuredRelease.image} alt={featuredRelease.title} width={480} />
+        </a>
+        <div class="info">
+          <p class="label">{ui.latestRelease[lang]}</p>
+          <h3 class="title">{featuredRelease.title}</h3>
+          <p class="meta">
+            <time datetime={featuredRelease.date}>{featuredRelease.meta}</time>
+          </p>
+          <p class="desc">{featuredRelease.description[lang]}</p>
+          <iframe
+            title={`Bandcamp: ${featuredRelease.title}`}
+            src={`https://bandcamp.com/EmbeddedPlayer/album=${featuredRelease.bandcampId}/size=large/bgcol=333333/linkcol=e8a95e/tracklist=false/artwork=none/transparent=true/`}
+            height="120"
+            loading="lazy"
+            seamless
+          >
+            <a href={featuredRelease.url}>{featuredRelease.title}</a>
+          </iframe>
+        </div>
       </div>
 
       <ul class="videos">
@@ -460,19 +466,46 @@ const year = new Date().getFullYear();
     color: var(--muted);
     font-size: 0.85rem;
   }
-  .bandcamp {
+  .featured {
     display: grid;
-    gap: 16px;
-    margin-bottom: 40px;
+    grid-template-columns: 260px 1fr;
+    gap: 32px;
+    align-items: center;
+    padding: 24px;
+    margin-bottom: 48px;
+    background: var(--bg-raised);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
   }
-  .bandcamp .label {
+  .featured .cover :global(img) {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  .featured .label {
     margin: 0;
     font-size: 0.75rem;
     color: var(--accent);
-    letter-spacing: 0.08em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .featured .title {
+    font-family: var(--serif);
+    font-size: 2.2rem;
+    line-height: 1.2;
+    margin: 4px 0 0;
+  }
+  .featured .meta {
+    margin: 4px 0 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  .featured .desc {
+    margin: 12px 0 16px;
   }
   /* Bandcamp のプレイヤーは 700px より広がらないので、枠もそこで止める */
-  .bandcamp iframe {
+  .featured iframe {
     width: 100%;
     max-width: 700px;
     border: 0;
@@ -650,6 +683,11 @@ const year = new Date().getFullYear();
   }
 
   @media (max-width: 720px) {
+    .featured {
+      grid-template-columns: 1fr;
+      gap: 20px;
+      padding: 16px;
+    }
     section {
       padding: 56px 0;
     }
