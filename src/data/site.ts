@@ -99,11 +99,11 @@ export type Release = {
 };
 
 export const discography: Release[] = [
-  { title: 'Grooves', kind: 'Album', date: '2026-10-25', with: { ja: 'ぱみ', en: 'Pami' }, url: 'https://akm19gu.bandcamp.com/album/grooves' },
+  { title: 'Grooves', kind: 'Album', date: '2026-10-25', with: { ja: 'Shunya Ishikawa', en: 'Shunya Ishikawa' }, url: 'https://akm19gu.bandcamp.com/album/grooves' },
   { title: '貝塚行に乗っちゃった (feat. 重音テト)', kind: 'Single', date: '2026-03-27', url: 'https://open.spotify.com/album/3l7oOFUomSVkehMK1dcUwx' },
   { title: '帰っちゃおうかな', kind: 'YouTube', date: '2026-02-19', url: 'https://www.youtube.com/watch?v=oC_r0DZLHdA' },
   { title: 'リボーン (Reborn)', kind: 'EP', date: '2025-11-04', url: 'https://open.spotify.com/album/27L4KpIXDBxGhRYx04dFwY' },
-  { title: 'Post251', kind: 'EP', date: '2025-10-26', with: { ja: 'ぱみ', en: 'Pami' }, url: 'https://open.spotify.com/album/3JY5pafQJZpOFDHgWQJMHB' },
+  { title: 'Post251', kind: 'EP', date: '2025-10-26', with: { ja: 'Shunya Ishikawa', en: 'Shunya Ishikawa' }, url: 'https://open.spotify.com/album/3JY5pafQJZpOFDHgWQJMHB' },
   { title: '地獄の沙汰もガチ金次第', kind: 'YouTube', date: '2025-08-25', url: 'https://www.youtube.com/watch?v=p8jzZRMyxzw' },
   { title: 'One minute before', kind: 'YouTube', date: '2025-03-27', url: 'https://www.youtube.com/watch?v=EecEE-qlePo' },
   { title: 'エニシダ (Broom)', kind: 'Single', date: '2024-12-29', url: 'https://open.spotify.com/album/51eNrpxEloNdviplFi5azM' },
@@ -138,8 +138,8 @@ export const works: Work[] = [
   {
     title: { ja: 'Post251', en: 'Post251' },
     description: {
-      ja: 'コンポーザーのぱみと結成した、実験的DTMジャズユニット「Post251」のウェブサイト。',
-      en: 'Website of Post251, an experimental DTM jazz unit I formed with composer Pami.',
+      ja: 'コンポーザーの Shunya Ishikawa と結成した、実験的DTMジャズユニット「Post251」のウェブサイト。',
+      en: 'Website of Post251, an experimental DTM jazz unit I formed with composer Shunya Ishikawa.',
     },
     url: 'https://post251.com',
     image: post251,
@@ -213,8 +213,8 @@ export const timeline: { year: string; text: Text }[] = [
   {
     year: '2025',
     text: {
-      ja: 'ぱみ (@pamiyummy) と実験的DTMジャズユニット「Post251」を結成。M3秋でEP「Post251」を頒布。',
-      en: 'Formed the experimental DTM jazz unit Post251 with Pami (@pamiyummy). Released the EP “Post251” at M3 Autumn.',
+      ja: 'Shunya Ishikawa (@pamiyummy) と実験的DTMジャズユニット「Post251」を結成。M3秋でEP「Post251」を頒布。',
+      en: 'Formed the experimental DTM jazz unit Post251 with Shunya Ishikawa (@pamiyummy). Released the EP “Post251” at M3 Autumn.',
     },
   },
   {
