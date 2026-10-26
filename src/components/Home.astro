@@ -149,7 +149,7 @@ const year = new Date().getFullYear();
             <li>
               <a href={w.url} target="_blank" rel="noopener">
                 <div class="card-img">
-                  <Image src={w.image} alt="" width={640} />
+                  <Image src={w.image} alt="" width={640} style={w.imagePosition && `object-position: ${w.imagePosition}`} />
                 </div>
                 <div class="card-body">
                   <span class="tag">{w.tag}</span>
