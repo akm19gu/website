@@ -138,8 +138,8 @@ export const works: Work[] = [
   {
     title: { ja: 'Post251', en: 'Post251' },
     description: {
-      ja: 'コンポーザーのぱみと結成した、実験的DTMジャズユニット「Post251」のウェブサイト。',
-      en: 'Website of Post251, an experimental DTM jazz unit I formed with composer Pami.',
+      ja: 'コンポーザーの Shunya Ishikawa と結成した、実験的DTMジャズユニット「Post251」のウェブサイト。',
+      en: 'Website of Post251, an experimental DTM jazz unit I formed with composer Shunya Ishikawa.',
     },
     url: 'https://post251.com',
     image: post251,
@@ -213,8 +213,8 @@ export const timeline: { year: string; text: Text }[] = [
   {
     year: '2025',
     text: {
-      ja: 'ぱみ (@pamiyummy) と実験的DTMジャズユニット「Post251」を結成。M3秋でEP「Post251」を頒布。',
-      en: 'Formed the experimental DTM jazz unit Post251 with Pami (@pamiyummy). Released the EP “Post251” at M3 Autumn.',
+      ja: 'Shunya Ishikawa (@pamiyummy) と実験的DTMジャズユニット「Post251」を結成。M3秋でEP「Post251」を頒布。',
+      en: 'Formed the experimental DTM jazz unit Post251 with Shunya Ishikawa (@pamiyummy). Released the EP “Post251” at M3 Autumn.',
     },
   },
   {
