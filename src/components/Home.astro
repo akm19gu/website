@@ -87,15 +87,40 @@ const year = new Date().getFullYear();
             <time datetime={featuredRelease.date}>{featuredRelease.meta}</time>
           </p>
           <p class="desc">{featuredRelease.description[lang]}</p>
-          <iframe
-            title={`Bandcamp: ${featuredRelease.title}`}
-            src={`https://bandcamp.com/EmbeddedPlayer/album=${featuredRelease.bandcampId}/size=large/bgcol=333333/linkcol=e8a95e/tracklist=false/artwork=none/transparent=true/`}
-            height="120"
-            loading="lazy"
-            seamless
-          >
-            <a href={featuredRelease.url}>{featuredRelease.title}</a>
-          </iframe>
+          <div class="switch" role="tablist" aria-label={ui.listenOrBuy[lang]}>
+            <span class="knob" aria-hidden="true"></span>
+            <button type="button" role="tab" aria-selected="true" data-slide="0">
+              <span class="verb">{ui.listen[lang]}</span> Spotify
+            </button>
+            <button type="button" role="tab" aria-selected="false" data-slide="1">
+              <span class="verb">{ui.buy[lang]}</span> Bandcamp
+            </button>
+          </div>
+          <div class="slides">
+            <div class="slide">
+              <iframe
+                title={`Spotify: ${featuredRelease.title}`}
+                src={`https://open.spotify.com/embed/album/${featuredRelease.spotifyId}?theme=0`}
+                height="152"
+                loading="lazy"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              />
+            </div>
+            <div class="slide">
+              <iframe
+                class="bc"
+                title={`Bandcamp: ${featuredRelease.title}`}
+                src={`https://bandcamp.com/EmbeddedPlayer/album=${featuredRelease.bandcampId}/size=large/bgcol=333333/linkcol=e8a95e/tracklist=false/artwork=none/transparent=true/`}
+                height="120"
+                loading="lazy"
+                seamless
+              />
+              <div class="buy">
+                <a class="btn" href={featuredRelease.url} target="_blank" rel="noopener">{ui.buyOnBandcamp[lang]}</a>
+                <span class="note">{featuredRelease.buyNote[lang]}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -251,6 +276,30 @@ const year = new Date().getFullYear();
   <footer>
     <p>© {year} {profile.name[lang]} ({profile.subName[lang]})</p>
   </footer>
+  <script>
+    // 「聴く / 買う」のスイッチと、横にスライドするプレイヤー。スワイプでも切り替わる。
+    document.querySelectorAll<HTMLElement>('.featured').forEach((root) => {
+      const track = root.querySelector<HTMLElement>('.slides');
+      const sw = root.querySelector<HTMLElement>('.switch');
+      if (!track || !sw) return;
+      const buttons = [...sw.querySelectorAll<HTMLButtonElement>('[data-slide]')];
+      const select = (i: number) => {
+        buttons.forEach((b, j) => b.setAttribute('aria-selected', String(i === j)));
+        sw.style.setProperty('--i', String(i));
+      };
+      buttons.forEach((b, i) =>
+        b.addEventListener('click', () => {
+          select(i);
+          track.scrollTo({ left: i * track.clientWidth, behavior: 'smooth' });
+        }),
+      );
+      let t = 0;
+      track.addEventListener('scroll', () => {
+        clearTimeout(t);
+        t = window.setTimeout(() => select(Math.round(track.scrollLeft / track.clientWidth)), 60);
+      });
+    });
+  </script>
 </Base>
 
 <style>
@@ -511,6 +560,96 @@ const year = new Date().getFullYear();
     border: 0;
     border-radius: 12px;
     background: #333333;
+  }
+  .switch {
+    --i: 0;
+    position: relative;
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 12px;
+    padding: 4px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--bg);
+  }
+  .switch .knob {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    width: calc(50% - 4px);
+    border-radius: 999px;
+    background: var(--accent);
+    transform: translateX(calc(var(--i) * 100%));
+    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .switch button {
+    position: relative;
+    font: inherit;
+    font-size: 0.85rem;
+    color: var(--muted);
+    background: none;
+    border: 0;
+    padding: 6px 18px;
+    cursor: pointer;
+    transition: color 0.35s;
+    white-space: nowrap;
+  }
+  .switch button[aria-selected='true'] {
+    color: var(--bg);
+    font-weight: 700;
+  }
+  .switch .verb {
+    margin-right: 4px;
+  }
+  .slides {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    max-width: 700px;
+  }
+  .slides::-webkit-scrollbar {
+    display: none;
+  }
+  .slide {
+    min-width: 0;
+    scroll-snap-align: start;
+  }
+  .slide iframe {
+    width: 100%;
+    border: 0;
+    border-radius: 12px;
+    display: block;
+  }
+  .slide iframe.bc {
+    background: #333333;
+  }
+  .buy {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+    margin-top: 12px;
+  }
+  .buy .btn {
+    display: inline-block;
+    padding: 8px 20px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+  .buy .note {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .switch .knob { transition: none; }
   }
   .spotify {
     display: grid;

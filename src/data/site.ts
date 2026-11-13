@@ -25,6 +25,10 @@ export const ui = {
   about: { ja: 'わたしについて', en: 'About me' },
   links: { ja: 'あちこちにいる', en: 'Find me around' },
   latestRelease: { ja: 'Latest Release', en: 'Latest Release' },
+  listenOrBuy: { ja: '聴く・買う', en: 'Listen or buy' },
+  listen: { ja: '聴く', en: 'Listen' },
+  buy: { ja: '買う', en: 'Buy' },
+  buyOnBandcamp: { ja: 'Bandcamp で購入', en: 'Buy on Bandcamp' },
   pageNav: { ja: 'ページ内リンク', en: 'Sections' },
   langNav: { ja: '言語', en: 'Language' },
   avatarAlt: { ja: 'なかむのアイコン', en: 'Nakam’s avatar' },
@@ -66,15 +70,23 @@ export const videos: Video[] = [
 ];
 
 // Music のいちばん上に大きく出す最新リリース。
+// 「聴く」で Spotify、「買う」で Bandcamp のプレイヤーを出す。
+// spotifyId は Spotify のアルバム URL の album/… の部分、
 // bandcampId は Bandcamp のアルバムページの og:video にある album=… の数字。
 export const featuredRelease = {
   title: 'Grooves',
   meta: 'Post251 · 1st Album · 2026.10.25',
   date: '2026-10-25',
   description: {
-    ja: '微分音やディラ・ビートを通して「揺らぎ」を探る全10曲。',
-    en: 'Ten tracks exploring “wobble” through microtones and Dilla beats.',
+    ja: '微分音やディラ・ビートを通して「揺らぎ」を探る、Post251 の1stアルバム。',
+    en: 'Post251’s first album, exploring “wobble” through microtones and Dilla beats.',
   } satisfies Text,
+  // Bandcamp 版だけの内容（Spotify 版は「On the Ginza」を除く9曲）
+  buyNote: {
+    ja: '全10曲（「On the Ginza」収録）・購入者限定の楽曲解説つき',
+    en: 'All 10 tracks incl. “On the Ginza”, with buyer-only liner notes',
+  } satisfies Text,
+  spotifyId: '5JTJBggOauoe7uByAUAniP',
   url: 'https://akm19gu.bandcamp.com/album/grooves',
   bandcampId: '1191509877',
   image: grooves,
