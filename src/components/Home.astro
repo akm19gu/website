@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import QRCode from 'qrcode';
 import Base from '../layouts/Base.astro';
 import avatar from '../assets/avatar.jpg';
 import bg from '../assets/bg.jpg';
@@ -34,22 +35,33 @@ const nav = [
   { href: '#links', label: 'Links' },
 ];
 const year = new Date().getFullYear();
+// このページ（日本語なら /、英語なら /en/）の QR をビルド時に SVG で作って埋め込む。
+const pageUrl = new URL(`${base}${langPath[lang]}`, Astro.site).href;
+const qrSvg = await QRCode.toString(pageUrl, {
+  type: 'svg',
+  margin: 1,
+  color: { dark: '#16131a', light: '#ffffff' },
+});
+const qrIcon = `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="currentColor"><path d="M3 3h8v8H3zm2 2v4h4V5zm8-2h8v8h-8zm2 2v4h4V5zM3 13h8v8H3zm2 2v4h4v-4zm11-2h2v2h-2zm-3 0h2v4h-2zm6 0h2v2h-2zm-3 3h2v2h-2zm3 0h2v5h-2zm-6 3h2v2h-2zm3 2h2v1h-2z"/></svg>`;
 ---
 
 <Base lang={lang}>
+  <div class="top-tools">
   <nav class="lang-switch" aria-label={ui.langNav[lang]}>
-    {
-      langs.map((l) =>
-        l === lang ? (
-          <span aria-current="page">{l.toUpperCase()}</span>
-        ) : (
-          <a href={`${base}${langPath[l]}`} hreflang={l} lang={l}>
-            {l.toUpperCase()}
-          </a>
-        ),
-      )
-    }
-  </nav>
+      {
+        langs.map((l) =>
+          l === lang ? (
+            <span aria-current="page">{l.toUpperCase()}</span>
+          ) : (
+            <a href={`${base}${langPath[l]}`} hreflang={l} lang={l}>
+              {l.toUpperCase()}
+            </a>
+          ),
+        )
+      }
+    </nav>
+    <button type="button" class="qr-open icon" aria-label={ui.showQr[lang]} set:html={qrIcon} />
+  </div>
 
   <header class="hero">
     <Image src={bg} alt="" class="hero-bg" widths={[960, 1920]} sizes="100vw" loading="eager" />
@@ -276,6 +288,15 @@ const year = new Date().getFullYear();
   <footer>
     <p>© {year} {profile.name[lang]} ({profile.subName[lang]})</p>
   </footer>
+
+  <dialog class="qr-dialog" aria-label={ui.qrDialog[lang]}>
+    <p class="qr-title">{profile.name[lang]} <span>{profile.subName[lang]}</span></p>
+    <div class="qr-code" set:html={qrSvg} />
+    <p class="qr-url">{pageUrl.replace(/^https:\/\//, '')}</p>
+    <form method="dialog">
+      <button type="submit" class="qr-close">{ui.close[lang]}</button>
+    </form>
+  </dialog>
   <script>
     // 「聴く / 買う」のスイッチと、横にスライドするプレイヤー。スワイプでも切り替わる。
     document.querySelectorAll<HTMLElement>('.featured').forEach((root) => {
@@ -300,15 +321,91 @@ const year = new Date().getFullYear();
       });
     });
   </script>
+  <script>
+    // 右上の QR ボタンでダイアログを開く。外側を押しても閉じる。
+    const dialog = document.querySelector<HTMLDialogElement>('.qr-dialog');
+    document.querySelectorAll('.qr-open').forEach((b) => b.addEventListener('click', () => dialog?.showModal()));
+    dialog?.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+  </script>
 </Base>
 
 <style>
   /* ---------- Language switch ---------- */
-  .lang-switch {
+  .top-tools {
     position: absolute;
     top: 16px;
     right: 16px;
     z-index: 10;
+    display: flex;
+    gap: 8px;
+  }
+  .qr-open.icon {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 30px;
+    padding: 0;
+    color: var(--text);
+    border: 1px solid rgba(236, 230, 238, 0.3);
+    border-radius: 999px;
+    background: rgba(22, 19, 26, 0.55);
+    cursor: pointer;
+  }
+  .qr-open.icon:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .qr-dialog {
+    padding: 28px 28px 20px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg-raised);
+    color: var(--text);
+    text-align: center;
+    max-width: min(340px, calc(100vw - 32px));
+  }
+  .qr-dialog::backdrop {
+    background: rgba(10, 8, 12, 0.7);
+    backdrop-filter: blur(4px);
+  }
+  .qr-title {
+    margin: 0 0 16px;
+    font-family: var(--serif);
+    font-size: 1.4rem;
+  }
+  .qr-title span {
+    margin-left: 6px;
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+  }
+  .qr-code :global(svg) {
+    display: block;
+    width: 240px;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 10px;
+  }
+  .qr-url {
+    margin: 12px 0 16px;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .qr-close {
+    padding: 6px 24px;
+    font: inherit;
+    font-size: 0.85rem;
+    color: var(--bg);
+    background: var(--accent);
+    border: 0;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .lang-switch {
     display: flex;
     border: 1px solid rgba(236, 230, 238, 0.3);
     border-radius: 999px;
