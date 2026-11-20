@@ -32,6 +32,7 @@ export const ui = {
   showQr: { ja: 'このページの QR コードを表示', en: 'Show QR code for this page' },
   qrDialog: { ja: 'このページの QR コード', en: 'QR code for this page' },
   close: { ja: '閉じる', en: 'Close' },
+  stopBeat: { ja: 'ビートを止める', en: 'Stop the beat' },
   pageNav: { ja: 'ページ内リンク', en: 'Sections' },
   langNav: { ja: '言語', en: 'Language' },
   avatarAlt: { ja: 'なかむのアイコン', en: 'Nakam’s avatar' },
