@@ -329,6 +329,11 @@ const qrIcon = `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="tru
       if (e.target === dialog) dialog.close();
     });
   </script>
+  <script>
+    import { setupTapBeat } from '../scripts/tap-beat';
+    const avatarEl = document.querySelector<HTMLElement>('.hero .avatar');
+    if (avatarEl) setupTapBeat(avatarEl);
+  </script>
 </Base>
 
 <style>
@@ -464,6 +469,15 @@ const qrIcon = `<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="tru
     object-fit: cover;
     margin: 0 auto 24px;
     border: 2px solid rgba(236, 230, 238, 0.25);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  /* ビートが鳴っている間は、縁を暁色に光らせる */
+  .hero :global(.avatar.is-playing) {
+    border-color: var(--accent);
+    box-shadow: 0 0 24px rgba(232, 169, 94, 0.45);
   }
   .catch {
     margin: 0;
